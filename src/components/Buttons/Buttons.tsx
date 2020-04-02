@@ -38,12 +38,6 @@ class Buttons extends React.Component<{}, ButtonsState> {
         }
     }
 
-    static handleSpeedInputChange(newSpeed: number) {
-        if (MIN_BPM <= newSpeed && newSpeed <= MAX_BPM) {
-            SpeedStore.dispatch(setSpeed(newSpeed));
-        }
-    }
-
     static handleToneChange(url_name: string) {
         if (url_name in AUDIO_URL) {
             SpeedStore.dispatch(setTone(AUDIO_URL[url_name]));
@@ -54,7 +48,7 @@ class Buttons extends React.Component<{}, ButtonsState> {
         return <div className={styles.Buttons}>
             <button onClick={() => SpeedStore.dispatch(decSpeed())} disabled={!this.state.enableMinus}>-</button>
             <input  type="Number"  value={this.state.speed}
-                    onChange={e => Buttons.handleSpeedInputChange(parseInt(e.target.value))} />
+                    onChange={e => SpeedStore.dispatch(setSpeed(parseInt(e.target.value)))} />
             <button onClick={() => SpeedStore.dispatch(incSpeed())} disabled={!this.state.enablePlus} >+</button>
 
             <br />
