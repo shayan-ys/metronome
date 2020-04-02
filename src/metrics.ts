@@ -14,7 +14,7 @@ export const AUDIO_URL_DEFAULT_KEY = "clock";
 export const AUDIO_URL_DEFAULT = AUDIO_URL[AUDIO_URL_DEFAULT_KEY];
 
 export const NOTES: {[key: string]: number} = {
-    "one":       1,
+    "single":    1,
     "half":      0.5,
     "one-third": 1/3,
     "quarter":   0.25,
