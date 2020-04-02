@@ -22,3 +22,5 @@ export const NOTES: {[key: string]: number} = {
 
 export const NOTES_DEFAULT_KEY = "quarter";
 export const NOTES_DEFAULT = NOTES[NOTES_DEFAULT_KEY];
+
+export const STEPS_BASE = 1;

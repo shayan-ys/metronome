@@ -6,7 +6,8 @@ import { toMS } from "../../helper";
 interface DisplayProps {}
 
 interface DisplayState {
-    speed: number;
+    speed: number
+    step: number
 }
 
 class Display extends React.Component<DisplayProps, DisplayState> {
@@ -14,14 +15,16 @@ class Display extends React.Component<DisplayProps, DisplayState> {
         super(props);
 
         this.state = {
-            speed: SpeedStore.getState().speed
+            speed: SpeedStore.getState().speed,
+            step: SpeedStore.getState().current_step,
         };
     }
 
     componentDidMount(): void {
         SpeedStore.subscribe(() =>
             this.setState({
-                speed: SpeedStore.getState().speed
+                speed: SpeedStore.getState().speed,
+                step: SpeedStore.getState().current_step,
             })
         );
     }
@@ -32,6 +35,8 @@ class Display extends React.Component<DisplayProps, DisplayState> {
             BPM: {this.state.speed}
             <br />
             MS: {ms}
+            <br />
+            step: {this.state.step}
         </div>
     }
 }

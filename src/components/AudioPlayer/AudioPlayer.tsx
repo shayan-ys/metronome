@@ -2,12 +2,15 @@ import React from 'react';
 import styles from './AudioPlayer.module.scss';
 import {MS_PRECISION} from "../../metrics";
 import {SpeedStore} from "../Metronome/speed/store";
-import {toMS} from "../../helper";
+import {alternateTone, toMS} from "../../helper";
+import {step} from "../Metronome/speed/actions";
 
 interface AudioState {
     speedMS: number,
     playing: boolean,
-    loaded : boolean
+    loaded : boolean,
+    step   : number,
+    note   : number,
 }
 
 class AudioPlayer extends React.Component<{}, AudioState> {
@@ -18,8 +21,10 @@ class AudioPlayer extends React.Component<{}, AudioState> {
         super(props);
         this.state = {
             speedMS: toMS(SpeedStore.getState().speed, SpeedStore.getState().notes_count),
-            playing: false,
-            loaded : false
+            playing: SpeedStore.getState().playing,
+            loaded : false,
+            step   : SpeedStore.getState().current_step,
+            note   : SpeedStore.getState().notes_count,
         };
     }
 
@@ -27,7 +32,9 @@ class AudioPlayer extends React.Component<{}, AudioState> {
         SpeedStore.subscribe(() => {
             // speed
             this.setState({
-                speedMS: toMS(SpeedStore.getState().speed, SpeedStore.getState().notes_count)
+                speedMS: toMS(SpeedStore.getState().speed, SpeedStore.getState().notes_count),
+                step   : SpeedStore.getState().current_step,
+                note   : SpeedStore.getState().notes_count,
             });
 
             // playing
@@ -47,10 +54,15 @@ class AudioPlayer extends React.Component<{}, AudioState> {
     tick() {
         let newAudio = this.audio.cloneNode(true);
 
+        if (this.state.step >= (1 / this.state.note) && this.state.note !== 1) {
+            newAudio.childNodes[0].setAttribute("src", alternateTone());
+        }
+
         try {
             let key = newAudio.getAttribute("key");
             newAudio.setAttribute("key", (parseInt(key) + 1).toString());
             newAudio.play();
+            SpeedStore.dispatch(step());
         } catch (e) {
             // browser not supported
             this.stop();
