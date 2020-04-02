@@ -27,7 +27,7 @@ class Display extends React.Component<DisplayProps, DisplayState> {
     }
 
     render() {
-        let ms = toMS(this.state.speed).toFixed(0);
+        let ms = toMS(this.state.speed, SpeedStore.getState().notes_count).toFixed(0);
         return <div className={styles.Display}>
             BPM: {this.state.speed}
             <br />

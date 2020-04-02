@@ -17,7 +17,7 @@ class AudioPlayer extends React.Component<{}, AudioState> {
     constructor(props: {}) {
         super(props);
         this.state = {
-            speedMS: toMS(SpeedStore.getState().speed),
+            speedMS: toMS(SpeedStore.getState().speed, SpeedStore.getState().notes_count),
             playing: false,
             loaded : false
         };
@@ -27,7 +27,7 @@ class AudioPlayer extends React.Component<{}, AudioState> {
         SpeedStore.subscribe(() => {
             // speed
             this.setState({
-                speedMS: toMS(SpeedStore.getState().speed)
+                speedMS: toMS(SpeedStore.getState().speed, SpeedStore.getState().notes_count)
             });
 
             // playing

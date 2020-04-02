@@ -1,8 +1,15 @@
 import React from 'react';
 import styles from './Buttons.module.scss';
 import {SpeedStore} from "../Metronome/speed/store";
-import {decSpeed, incSpeed, playMetro, setSpeed, setTone, stopMetro} from "../Metronome/speed/actions";
-import {AUDIO_URL, MAX_BPM, MIN_BPM} from "../../metrics";
+import {decSpeed, incSpeed, playMetro, setNote, setSpeed, setTone, stopMetro} from "../Metronome/speed/actions";
+import {
+    AUDIO_URL,
+    AUDIO_URL_DEFAULT_KEY,
+    MAX_BPM,
+    MIN_BPM,
+    NOTES,
+    NOTES_DEFAULT_KEY
+} from "../../metrics";
 
 interface ButtonsState {
     speed: number,
@@ -52,8 +59,19 @@ class Buttons extends React.Component<{}, ButtonsState> {
             <button onClick={() => SpeedStore.dispatch(incSpeed())} disabled={!this.state.enablePlus} >+</button>
 
             <br />
-            <select onChange={e => Buttons.handleToneChange(e.target.value)}>
+            Tone:
+            <select onChange={e => Buttons.handleToneChange(e.target.value)} defaultValue={AUDIO_URL_DEFAULT_KEY}>
                 {Object.keys(AUDIO_URL).map(
+                    (key, index) =>
+                        <option value={key} key={index}>
+                            {key}
+                        </option>
+                )}
+            </select>
+            <br />
+            Note:
+            <select onChange={e => SpeedStore.dispatch(setNote(e.target.value))} defaultValue={NOTES_DEFAULT_KEY}>
+                {Object.keys(NOTES).map(
                     (key, index) =>
                         <option value={key} key={index}>
                             {key}

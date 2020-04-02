@@ -7,12 +7,14 @@ export const SPEED_DECREMENT = 'SPEED_DECREMENT';
 export const PLAY = 'PLAY';
 export const STOP = 'STOP';
 export const SET_TONE = 'SET_TONE';
+export const SET_NOTES_COUNT = 'SET_NOTES_COUNT';
 
 /**
  * action
  */
-export const setSpeed  = (speed: number) => ({ type: SET_SPEED, value: speed });
-export const setTone   = (tone:  string) => ({ type: SET_TONE, value: tone });
+export const setSpeed  = (speed: number) => ({ type: SET_SPEED,       value: speed });
+export const setTone   = (tone:  string) => ({ type: SET_TONE,        value: tone });
+export const setNote   = (note:  string) => ({ type: SET_NOTES_COUNT, value: note});
 export const incSpeed  = () => ({ type: SPEED_INCREMENT });
 export const decSpeed  = () => ({ type: SPEED_DECREMENT });
 export const playMetro = () => ({ type: PLAY });

@@ -10,5 +10,15 @@ export const AUDIO_URL: {[key: string]: string} = {
     "handbag-lock7": "https://app.shayanys.com/metronome/audio/handbag-lock7.wav",
     "button10": "https://app.shayanys.com/metronome/audio/button10.wav",
 };
+export const AUDIO_URL_DEFAULT_KEY = "clock";
+export const AUDIO_URL_DEFAULT = AUDIO_URL[AUDIO_URL_DEFAULT_KEY];
 
-export const AUDIO_URL_DEFAULT = AUDIO_URL.clock;
+export const NOTES: {[key: string]: number} = {
+    "one":       1,
+    "half":      0.5,
+    "one-third": 1/3,
+    "quarter":   0.25,
+};
+
+export const NOTES_DEFAULT_KEY = "quarter";
+export const NOTES_DEFAULT = NOTES[NOTES_DEFAULT_KEY];
