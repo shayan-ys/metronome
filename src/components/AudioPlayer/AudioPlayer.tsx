@@ -86,8 +86,8 @@ class AudioPlayer extends React.Component<{}, AudioState> {
     render() {
         return (
             <div className={styles.AudioPlayer}>
-                <audio ref={audio => {this.audio = audio}} key={0} onLoad={e => this.loaded()} onEnded={e => AudioPlayer.ended(e)}>
-                    <source src="https://app.shayanys.com/metronome/audio/clock.wav" type="audio/mpeg" >
+                <audio ref={audio => {this.audio = audio}} key={0} onLoad={() => this.loaded()} onEnded={e => AudioPlayer.ended(e)}>
+                    <source src={SpeedStore.getState().audio_url} type="audio/mpeg" >
                     </source>
                 </audio>
             </div>

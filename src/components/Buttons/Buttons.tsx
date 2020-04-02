@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './Buttons.module.scss';
 import {SpeedStore} from "../Metronome/speed/store";
-import {decSpeed, incSpeed, playMetro, setSpeed, stopMetro} from "../Metronome/speed/actions";
-import {MAX_BPM, MIN_BPM} from "../../metrics";
+import {decSpeed, incSpeed, playMetro, setSpeed, setTone, stopMetro} from "../Metronome/speed/actions";
+import {AUDIO_URL, MAX_BPM, MIN_BPM} from "../../metrics";
 
 interface ButtonsState {
     speed: number,
@@ -38,18 +38,34 @@ class Buttons extends React.Component<{}, ButtonsState> {
         }
     }
 
-    static handleChange(newSpeed: number) {
+    static handleSpeedInputChange(newSpeed: number) {
         if (MIN_BPM <= newSpeed && newSpeed <= MAX_BPM) {
             SpeedStore.dispatch(setSpeed(newSpeed));
+        }
+    }
+
+    static handleToneChange(url_name: string) {
+        if (url_name in AUDIO_URL) {
+            SpeedStore.dispatch(setTone(AUDIO_URL[url_name]));
         }
     }
 
     render() {
         return <div className={styles.Buttons}>
             <button onClick={() => SpeedStore.dispatch(decSpeed())} disabled={!this.state.enableMinus}>-</button>
-            <input  type="Number"  value={this.state.speed}         onChange={e => Buttons.handleChange(parseInt(e.target.value))} />
+            <input  type="Number"  value={this.state.speed}
+                    onChange={e => Buttons.handleSpeedInputChange(parseInt(e.target.value))} />
             <button onClick={() => SpeedStore.dispatch(incSpeed())} disabled={!this.state.enablePlus} >+</button>
 
+            <br />
+            <select onChange={e => Buttons.handleToneChange(e.target.value)}>
+                {Object.keys(AUDIO_URL).map(
+                    (key, index) =>
+                        <option value={key} key={index}>
+                            {key}
+                        </option>
+                )}
+            </select>
             <br />
             <button onClick={() => SpeedStore.dispatch(playMetro())} disabled={ SpeedStore.getState().playing}>Play</button>
             <button onClick={() => SpeedStore.dispatch(stopMetro())} disabled={!SpeedStore.getState().playing}>Stop</button>

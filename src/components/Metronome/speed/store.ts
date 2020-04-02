@@ -1,5 +1,6 @@
 import {createStore} from "redux";
-import {PLAY, SET_SPEED, SPEED_DECREMENT, SPEED_INCREMENT, STOP} from "./actions";
+import {PLAY, SET_SPEED, SET_TONE, SPEED_DECREMENT, SPEED_INCREMENT, STOP} from "./actions";
+import {AUDIO_URL_DEFAULT} from "../../../metrics";
 
 interface ActionType {
     type: string,
@@ -8,12 +9,14 @@ interface ActionType {
 
 export interface StateType {
     speed: number,
-    playing: boolean
+    playing: boolean,
+    audio_url: string
 }
 
 const initialState: StateType = {
     speed: 100,
-    playing: false
+    playing: false,
+    audio_url: AUDIO_URL_DEFAULT
 };
 
 function reducer(state: StateType = initialState, action: ActionType) : StateType {
@@ -28,6 +31,8 @@ function reducer(state: StateType = initialState, action: ActionType) : StateTyp
             return {...state, playing: true};
         case STOP:
             return {...state, playing: false};
+        case SET_TONE:
+            return {...state, audio_url: action.value};
         default:
             return state;
     }
