@@ -37,9 +37,9 @@ class Display extends React.Component<DisplayProps, DisplayState> {
             <Typography variant="h3" gutterBottom>
                 {this.state.step}
             </Typography>
-            <Typography variant="caption" display="block" gutterBottom>
-                step
-            </Typography>
+            {/*<Typography variant="caption" display="block" gutterBottom>*/}
+            {/*    step*/}
+            {/*</Typography>*/}
         </Grid>
     }
 }
